@@ -1,40 +1,45 @@
 import { useEffect, useState } from "react";
 import { questions } from "../data/questions";
 
+const getRandomQuestionValue = () => {
+  const randomIndex = Math.floor(Math.random() * questions.length);
+  return questions[randomIndex];
+};
+
 function MockInterview() {
-  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [currentQuestion, setCurrentQuestion] = useState(() =>
+    getRandomQuestionValue()
+  );
   const [timeLeft, setTimeLeft] = useState(15 * 60);
   const [isRunning, setIsRunning] = useState(false);
   const [notes, setNotes] = useState("");
   const [language, setLanguage] = useState("en");
 
   const getRandomQuestion = () => {
-    const randomIndex = Math.floor(Math.random() * questions.length);
-    setCurrentQuestion(questions[randomIndex]);
+    setCurrentQuestion(getRandomQuestionValue());
     setNotes("");
     setTimeLeft(15 * 60);
     setIsRunning(false);
   };
 
   useEffect(() => {
-    getRandomQuestion();
-  }, []);
-
-  useEffect(() => {
-    let timer;
-
-    if (isRunning && timeLeft > 0) {
-      timer = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
-      }, 1000);
+    if (!isRunning) {
+      return undefined;
     }
 
-    if (timeLeft === 0) {
-      setIsRunning(false);
-    }
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          setIsRunning(false);
+          return 0;
+        }
+
+        return prev - 1;
+      });
+    }, 1000);
 
     return () => clearInterval(timer);
-  }, [isRunning, timeLeft]);
+  }, [isRunning]);
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);

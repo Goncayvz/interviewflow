@@ -3,22 +3,24 @@ import { questions } from "../data/questions";
 import QuestionCard from "../components/questions/QuestionCard";
 import SearchBar from "../components/questions/SearchBar";
 import QuestionFilter from "../components/questions/QuestionFilter";
+import { getSearchableText } from "../utils/getLocalizedText";
 
 function QuestionBank() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedDifficulty, setSelectedDifficulty] = useState("All");
-  const [solvedQuestions, setSolvedQuestions] = useState([]);
+  const [language, setLanguage] = useState("en");
+  const [solvedQuestions, setSolvedQuestions] = useState(() => {
+    try {
+      const storedSolved = JSON.parse(
+        localStorage.getItem("interviewflow_solved")
+      );
 
-  useEffect(() => {
-    const storedSolved = JSON.parse(
-      localStorage.getItem("interviewflow_solved")
-    );
-
-    if (storedSolved) {
-      setSolvedQuestions(storedSolved);
+      return Array.isArray(storedSolved) ? storedSolved : [];
+    } catch {
+      return [];
     }
-  }, []);
+  });
 
   useEffect(() => {
     localStorage.setItem(
@@ -36,9 +38,13 @@ function QuestionBank() {
   };
 
   const filteredQuestions = questions.filter((item) => {
+    const normalizedSearchTerm = searchTerm.toLowerCase();
+    const searchableQuestion = getSearchableText(item.question).toLowerCase();
+    const searchableAnswer = getSearchableText(item.answer).toLowerCase();
+
     const matchesSearch =
-      item.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.answer.toLowerCase().includes(searchTerm.toLowerCase());
+      searchableQuestion.includes(normalizedSearchTerm) ||
+      searchableAnswer.includes(normalizedSearchTerm);
 
     const matchesCategory =
       selectedCategory === "All" || item.category === selectedCategory;
@@ -52,11 +58,20 @@ function QuestionBank() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-4xl font-bold mb-2">Question Bank</h1>
-        <p className="text-slate-400">
-          Practice technical interview questions by category and difficulty.
-        </p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-4xl font-bold mb-2">Question Bank</h1>
+          <p className="text-slate-400">
+            Practice technical interview questions by category and difficulty.
+          </p>
+        </div>
+
+        <button
+          onClick={() => setLanguage((prev) => (prev === "en" ? "tr" : "en"))}
+          className="bg-slate-800 border border-slate-700 hover:border-cyan-500 px-4 py-2 rounded-xl transition text-sm"
+        >
+          {language === "en" ? "TR" : "EN"}
+        </button>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
@@ -81,6 +96,7 @@ function QuestionBank() {
           <QuestionCard
             key={item.id}
             question={item}
+            language={language}
             isSolved={solvedQuestions.includes(item.id)}
             onToggleSolved={handleToggleSolved}
           />
