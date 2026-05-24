@@ -1,9 +1,14 @@
+import { getLocalizedText } from "../../utils/getLocalizedText";
+
 function QuizCard({
   question,
   selectedAnswer,
   onSelectAnswer,
   showResult,
+  language = "en",
 }) {
+  const displayedQuestion = getLocalizedText(question.question, language);
+
   return (
     <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
       <div className="flex gap-2 mb-4">
@@ -16,12 +21,13 @@ function QuizCard({
         </span>
       </div>
 
-      <h2 className="text-2xl font-bold mb-6">{question.question}</h2>
+      <h2 className="text-2xl font-bold mb-6">{displayedQuestion}</h2>
 
       <div className="space-y-3">
-        {question.options.map((option) => {
-          const isSelected = selectedAnswer === option;
-          const isCorrect = question.correctAnswer === option;
+        {question.options.map((option, index) => {
+          const displayedOption = getLocalizedText(option, language);
+          const isSelected = selectedAnswer === index;
+          const isCorrect = question.correctAnswerIndex === index;
 
           let optionClass =
             "bg-slate-900 border-slate-700 hover:border-cyan-500";
@@ -40,24 +46,30 @@ function QuizCard({
 
           return (
             <button
-              key={option}
-              onClick={() => onSelectAnswer(option)}
+              key={displayedOption}
+              onClick={() => onSelectAnswer(index)}
               disabled={showResult}
               className={`w-full text-left border rounded-xl px-4 py-3 transition ${optionClass}`}
             >
               <div className="flex items-center justify-between gap-3">
-                <span>{option}</span>
+                <span>{displayedOption}</span>
 
                 {!showResult && isSelected && (
-                  <span className="text-sm font-medium">Selected</span>
+                  <span className="text-sm font-medium">
+                    {language === "en" ? "Selected" : "Seçildi"}
+                  </span>
                 )}
 
                 {showResult && isCorrect && (
-                  <span className="text-sm font-medium">Correct</span>
+                  <span className="text-sm font-medium">
+                    {language === "en" ? "Correct" : "Doğru"}
+                  </span>
                 )}
 
                 {showResult && isSelected && !isCorrect && (
-                  <span className="text-sm font-medium">Your Answer</span>
+                  <span className="text-sm font-medium">
+                    {language === "en" ? "Your Answer" : "Cevabın"}
+                  </span>
                 )}
               </div>
             </button>

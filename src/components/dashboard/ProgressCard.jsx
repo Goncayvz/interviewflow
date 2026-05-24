@@ -1,11 +1,4 @@
-function ProgressCard() {
-  const skills = [
-    { name: "React", progress: 80 },
-    { name: "JavaScript", progress: 72 },
-    { name: "HTML/CSS", progress: 90 },
-    { name: "Algorithms", progress: 45 },
-  ];
-
+function ProgressCard({ skills }) {
   return (
     <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
       <h2 className="text-xl font-semibold mb-6">

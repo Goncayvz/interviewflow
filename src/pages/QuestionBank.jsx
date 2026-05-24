@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { questions } from "../data/questions";
 import QuestionCard from "../components/questions/QuestionCard";
 import SearchBar from "../components/questions/SearchBar";
@@ -6,9 +7,14 @@ import QuestionFilter from "../components/questions/QuestionFilter";
 import { getSearchableText } from "../utils/getLocalizedText";
 
 function QuestionBank() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState(
+    searchParams.get("category") || "All"
+  );
+  const [selectedDifficulty, setSelectedDifficulty] = useState(
+    searchParams.get("difficulty") || "All"
+  );
   const [language, setLanguage] = useState("en");
   const [solvedQuestions, setSolvedQuestions] = useState(() => {
     try {
@@ -28,6 +34,20 @@ function QuestionBank() {
       JSON.stringify(solvedQuestions)
     );
   }, [solvedQuestions]);
+
+  useEffect(() => {
+    const params = {};
+
+    if (selectedCategory !== "All") {
+      params.category = selectedCategory;
+    }
+
+    if (selectedDifficulty !== "All") {
+      params.difficulty = selectedDifficulty;
+    }
+
+    setSearchParams(params, { replace: true });
+  }, [selectedCategory, selectedDifficulty, setSearchParams]);
 
   const handleToggleSolved = (id) => {
     setSolvedQuestions((prev) =>

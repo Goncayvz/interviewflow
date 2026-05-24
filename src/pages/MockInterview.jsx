@@ -1,12 +1,43 @@
 import { useEffect, useState } from "react";
 import { questions } from "../data/questions";
+import { getLocalizedText } from "../utils/getLocalizedText";
 
-const getRandomQuestionValue = () => {
-  const randomIndex = Math.floor(Math.random() * questions.length);
-  return questions[randomIndex];
+const categories = ["All", "React", "JavaScript", "HTML/CSS", "Algorithms"];
+const difficulties = ["All", "Easy", "Medium", "Hard"];
+const durations = [5, 10, 15, 20, 30];
+
+const getFilteredQuestions = (category, difficulty) => {
+  return questions.filter((question) => {
+    const matchesCategory = category === "All" || question.category === category;
+    const matchesDifficulty =
+      difficulty === "All" || question.difficulty === difficulty;
+
+    return matchesCategory && matchesDifficulty;
+  });
+};
+
+const getRandomQuestionValue = (category = "All", difficulty = "All") => {
+  const filteredQuestions = getFilteredQuestions(category, difficulty);
+  const questionPool = filteredQuestions.length > 0 ? filteredQuestions : questions;
+  const randomIndex = Math.floor(Math.random() * questionPool.length);
+
+  return questionPool[randomIndex];
+};
+
+const readSolvedQuestions = () => {
+  try {
+    const storedSolved = JSON.parse(localStorage.getItem("interviewflow_solved"));
+
+    return Array.isArray(storedSolved) ? storedSolved : [];
+  } catch {
+    return [];
+  }
 };
 
 function MockInterview() {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("All");
+  const [selectedDuration, setSelectedDuration] = useState(15);
   const [currentQuestion, setCurrentQuestion] = useState(() =>
     getRandomQuestionValue()
   );
@@ -14,12 +45,42 @@ function MockInterview() {
   const [isRunning, setIsRunning] = useState(false);
   const [notes, setNotes] = useState("");
   const [language, setLanguage] = useState("en");
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [solvedQuestions, setSolvedQuestions] = useState(readSolvedQuestions);
+
+  useEffect(() => {
+    localStorage.setItem("interviewflow_solved", JSON.stringify(solvedQuestions));
+  }, [solvedQuestions]);
+
+  const resetSession = (duration = selectedDuration) => {
+    setNotes("");
+    setShowAnswer(false);
+    setTimeLeft(Number(duration) * 60);
+    setIsRunning(false);
+  };
 
   const getRandomQuestion = () => {
-    setCurrentQuestion(getRandomQuestionValue());
-    setNotes("");
-    setTimeLeft(15 * 60);
-    setIsRunning(false);
+    setCurrentQuestion(getRandomQuestionValue(selectedCategory, selectedDifficulty));
+    resetSession();
+  };
+
+  const handleDurationChange = (value) => {
+    const duration = Number(value);
+
+    setSelectedDuration(duration);
+    resetSession(duration);
+  };
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setCurrentQuestion(getRandomQuestionValue(category, selectedDifficulty));
+    resetSession();
+  };
+
+  const handleDifficultyChange = (difficulty) => {
+    setSelectedDifficulty(difficulty);
+    setCurrentQuestion(getRandomQuestionValue(selectedCategory, difficulty));
+    resetSession();
   };
 
   useEffect(() => {
@@ -50,19 +111,28 @@ function MockInterview() {
     ).padStart(2, "0")}`;
   };
 
-  const displayedQuestion =
-    typeof currentQuestion?.question === "object"
-      ? currentQuestion.question[language]
-      : currentQuestion?.question;
-
-  const displayedAnswer =
-    typeof currentQuestion?.answer === "object"
-      ? currentQuestion.answer[language]
-      : currentQuestion?.answer;
-
   if (!currentQuestion) {
     return <p className="text-slate-400">Loading question...</p>;
   }
+
+  const displayedQuestion = getLocalizedText(currentQuestion.question, language);
+  const displayedAnswer = getLocalizedText(currentQuestion.answer, language);
+  const isCurrentQuestionSolved = solvedQuestions.includes(currentQuestion.id);
+  const availableQuestions = getFilteredQuestions(
+    selectedCategory,
+    selectedDifficulty
+  );
+
+  const markCurrentQuestionSolved = () => {
+    setSolvedQuestions((prev) =>
+      prev.includes(currentQuestion.id) ? prev : [...prev, currentQuestion.id]
+    );
+  };
+
+  const handleToggleAnswer = () => {
+    setShowAnswer((prev) => !prev);
+    markCurrentQuestionSolved();
+  };
 
   return (
     <div className="space-y-6">
@@ -70,7 +140,9 @@ function MockInterview() {
         <div>
           <h1 className="text-4xl font-bold mb-2">Mock Interview</h1>
           <p className="text-slate-400">
-            Simulate a real technical interview session with a timer and notes.
+            {language === "en"
+              ? "Simulate a real technical interview session with a timer and notes."
+              : "Zamanlayıcı ve notlarla gerçek bir teknik mülakat oturumu simüle et."}
           </p>
         </div>
 
@@ -96,18 +168,111 @@ function MockInterview() {
 
           <h2 className="text-3xl font-bold mb-6">{displayedQuestion}</h2>
 
-          <div className="bg-slate-900 border border-slate-700 rounded-xl p-5">
-            <p className="text-slate-400 mb-2">
-              {language === "en" ? "Suggested Answer" : "Önerilen Cevap"}
-            </p>
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={handleToggleAnswer}
+              className="bg-cyan-500 hover:bg-cyan-600 text-white px-5 py-3 rounded-xl transition"
+            >
+              {showAnswer
+                ? language === "en"
+                  ? "Hide Answer"
+                  : "Cevabı Gizle"
+                : language === "en"
+                  ? "Show Answer"
+                  : "Cevabı Göster"}
+            </button>
 
-            <p className="text-slate-200 leading-relaxed">
-              {displayedAnswer}
-            </p>
+            {isCurrentQuestionSolved && (
+              <span className="bg-green-500 text-white px-5 py-3 rounded-xl">
+                {language === "en" ? "Practiced" : "Çalışıldı"}
+              </span>
+            )}
           </div>
+
+          {showAnswer && (
+            <div className="mt-5 bg-slate-900 border border-slate-700 rounded-xl p-5">
+              <p className="text-slate-400 mb-2">
+                {language === "en" ? "Suggested Answer" : "Önerilen Cevap"}
+              </p>
+
+              <p className="text-slate-200 leading-relaxed">
+                {displayedAnswer}
+              </p>
+            </div>
+          )}
         </div>
 
         <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-5">
+          <div className="grid grid-cols-1 gap-4">
+            <div>
+              <label className="block text-sm text-slate-400 mb-2">
+                {language === "en" ? "Category" : "Kategori"}
+              </label>
+              <select
+                value={selectedCategory}
+                onChange={(event) => handleCategoryChange(event.target.value)}
+                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-cyan-500"
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category === "All" && language === "tr" ? "Tümü" : category}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm text-slate-400 mb-2">
+                {language === "en" ? "Difficulty" : "Zorluk"}
+              </label>
+              <select
+                value={selectedDifficulty}
+                onChange={(event) => handleDifficultyChange(event.target.value)}
+                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-cyan-500"
+              >
+                {difficulties.map((difficulty) => (
+                  <option key={difficulty} value={difficulty}>
+                    {difficulty === "All" && language === "tr"
+                      ? "Tümü"
+                      : difficulty === "Easy" && language === "tr"
+                        ? "Kolay"
+                        : difficulty === "Medium" && language === "tr"
+                          ? "Orta"
+                          : difficulty === "Hard" && language === "tr"
+                            ? "Zor"
+                            : difficulty}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm text-slate-400 mb-2">
+                {language === "en" ? "Duration" : "Süre"}
+              </label>
+              <select
+                value={selectedDuration}
+                onChange={(event) => handleDurationChange(event.target.value)}
+                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-cyan-500"
+              >
+                {durations.map((duration) => (
+                  <option key={duration} value={duration}>
+                    {language === "en"
+                      ? `${duration} minutes`
+                      : `${duration} dakika`}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="bg-slate-900 border border-slate-700 rounded-xl p-4 text-slate-400">
+            {language === "en" ? "Available questions:" : "Mevcut soru:"}{" "}
+            <span className="text-cyan-400 font-semibold">
+              {availableQuestions.length}
+            </span>
+          </div>
+
           <div className="text-center">
             <p className="text-slate-400 mb-2">
               {language === "en" ? "Interview Timer" : "Mülakat Süresi"}
@@ -134,10 +299,7 @@ function MockInterview() {
             </button>
 
             <button
-              onClick={() => {
-                setTimeLeft(15 * 60);
-                setIsRunning(false);
-              }}
+              onClick={() => resetSession()}
               className="bg-slate-700 hover:bg-slate-600 text-white py-3 rounded-xl transition"
             >
               {language === "en" ? "Reset" : "Sıfırla"}
@@ -146,7 +308,7 @@ function MockInterview() {
 
           <textarea
             value={notes}
-            onChange={(e) => setNotes(e.target.value)}
+            onChange={(event) => setNotes(event.target.value)}
             placeholder={
               language === "en"
                 ? "Write your interview notes..."
@@ -157,7 +319,8 @@ function MockInterview() {
 
           <button
             onClick={getRandomQuestion}
-            className="w-full bg-cyan-500 hover:bg-cyan-600 text-white py-3 rounded-xl transition"
+            disabled={availableQuestions.length === 0}
+            className="w-full bg-cyan-500 hover:bg-cyan-600 text-white py-3 rounded-xl transition disabled:opacity-50"
           >
             {language === "en" ? "Next Question" : "Sonraki Soru"}
           </button>

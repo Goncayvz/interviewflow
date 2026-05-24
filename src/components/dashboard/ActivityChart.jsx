@@ -1,41 +1,38 @@
 import {
-  LineChart,
-  Line,
+  BarChart,
+  Bar,
   XAxis,
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  { day: "Mon", solved: 12 },
-  { day: "Tue", solved: 18 },
-  { day: "Wed", solved: 9 },
-  { day: "Thu", solved: 22 },
-  { day: "Fri", solved: 16 },
-  { day: "Sat", solved: 28 },
-  { day: "Sun", solved: 20 },
-];
-
-function ActivityChart() {
+function ActivityChart({ data }) {
   return (
     <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 h-[400px]">
       <h2 className="text-xl font-semibold mb-6">
-        Weekly Activity
+        Solved by Category
       </h2>
 
       <ResponsiveContainer width="100%" height="85%">
-        <LineChart data={data}>
-          <XAxis dataKey="day" stroke="#94a3b8" />
-
-          <Tooltip />
-
-          <Line
-            type="monotone"
-            dataKey="solved"
-            stroke="#06b6d4"
-            strokeWidth={3}
+        <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 35 }}>
+          <XAxis
+            dataKey="category"
+            stroke="var(--chart-axis)"
+            interval={0}
+            angle={-20}
+            textAnchor="end"
+            height={60}
+            tick={{ fontSize: 12 }}
           />
-        </LineChart>
+
+          <Tooltip cursor={{ fill: "transparent" }} />
+
+          <Bar
+            dataKey="solved"
+            fill="var(--chart-primary)"
+            radius={[8, 8, 0, 0]}
+          />
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );

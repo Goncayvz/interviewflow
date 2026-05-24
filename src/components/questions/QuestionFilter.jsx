@@ -1,4 +1,4 @@
-const categories = ["All", "React", "JavaScript", "HTML/CSS"];
+const categories = ["All", "React", "JavaScript", "HTML/CSS", "Algorithms"];
 const difficulties = ["All", "Easy", "Medium", "Hard"];
 
 function QuestionFilter({
