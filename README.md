@@ -1,16 +1,41 @@
-# React + Vite
+# InterviewFlow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+InterviewFlow is a React interview preparation app with question tracking,
+hands-on tasks, task evidence uploads, progress analytics, and summary records.
 
-Currently, two official plugins are available:
+## Frontend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+Frontend runs at `http://127.0.0.1:5173/` by default.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## MySQL Backend
 
-## Expanding the ESLint configuration
+The backend uses Express and MySQL. MySQL Workbench can be used to create and
+inspect the database.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Start MySQL Server.
+2. Open MySQL Workbench.
+3. Run `server/schema.sql`.
+4. Copy `.env.example` to `.env`.
+5. Update your MySQL username and password in `.env`.
+6. Start the API:
+
+```bash
+npm run dev:api
+```
+
+API runs at `http://localhost:4000/api`.
+
+## Database Tables
+
+- `question_records`: solved question records and source.
+- `task_records`: task completion and evidence timestamps.
+- `task_evidence`: notes, demo link, repository link, and screenshot data.
+
+The frontend still keeps a localStorage fallback. If the API or MySQL is not
+running, the app continues to work locally; when the API is running, new records
+are also written to MySQL.

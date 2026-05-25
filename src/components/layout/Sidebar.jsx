@@ -3,9 +3,11 @@ import { NavLink } from "react-router-dom";
 const links = [
   { name: "Dashboard", path: "/" },
   { name: "Question Bank", path: "/question" },
+  { name: "Tasks", path: "/tasks" },
   { name: "Quiz Mode", path: "/quiz" },
   { name: "Mock Interview", path: "/mock-interview" },
   { name: "Progress", path: "/progress" },
+  { name: "Summary", path: "/summary" },
 ];
 
 function Sidebar() {

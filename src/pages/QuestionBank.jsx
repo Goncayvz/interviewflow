@@ -5,6 +5,11 @@ import QuestionCard from "../components/questions/QuestionCard";
 import SearchBar from "../components/questions/SearchBar";
 import QuestionFilter from "../components/questions/QuestionFilter";
 import { getSearchableText } from "../utils/getLocalizedText";
+import {
+  fetchRecords,
+  syncQuestionSolved,
+  syncQuestionUnsolved,
+} from "../services/api";
 
 function QuestionBank() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,6 +32,19 @@ function QuestionBank() {
       return [];
     }
   });
+  const [questionRecords, setQuestionRecords] = useState(() => {
+    try {
+      const storedRecords = JSON.parse(
+        localStorage.getItem("interviewflow_question_records")
+      );
+
+      return storedRecords && typeof storedRecords === "object"
+        ? storedRecords
+        : {};
+    } catch {
+      return {};
+    }
+  });
 
   useEffect(() => {
     localStorage.setItem(
@@ -34,6 +52,33 @@ function QuestionBank() {
       JSON.stringify(solvedQuestions)
     );
   }, [solvedQuestions]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "interviewflow_question_records",
+      JSON.stringify(questionRecords)
+    );
+  }, [questionRecords]);
+
+  useEffect(() => {
+    fetchRecords()
+      .then((records) => {
+        const nextQuestionRecords = Object.fromEntries(
+          records.questionRecords.map((record) => [
+            record.questionId,
+            {
+              source: record.source,
+              solvedAt: record.solvedAt,
+            },
+          ])
+        );
+        const nextSolvedQuestions = Object.keys(nextQuestionRecords).map(Number);
+
+        setSolvedQuestions(nextSolvedQuestions);
+        setQuestionRecords(nextQuestionRecords);
+      })
+      .catch(() => undefined);
+  }, []);
 
   useEffect(() => {
     const params = {};
@@ -50,11 +95,32 @@ function QuestionBank() {
   }, [selectedCategory, selectedDifficulty, setSearchParams]);
 
   const handleToggleSolved = (id) => {
-    setSolvedQuestions((prev) =>
-      prev.includes(id)
+    setSolvedQuestions((prev) => {
+      const isSolved = prev.includes(id);
+
+      setQuestionRecords((records) => {
+        const nextRecords = { ...records };
+
+        if (isSolved) {
+          delete nextRecords[id];
+          syncQuestionUnsolved(id);
+        } else {
+          const record = {
+            solvedAt: new Date().toISOString(),
+            source: "question-bank",
+          };
+
+          nextRecords[id] = record;
+          syncQuestionSolved(id, record);
+        }
+
+        return nextRecords;
+      });
+
+      return isSolved
         ? prev.filter((questionId) => questionId !== id)
-        : [...prev, id]
-    );
+        : [...prev, id];
+    });
   };
 
   const filteredQuestions = questions.filter((item) => {

@@ -5,6 +5,8 @@ import QuestionBank from "../pages/QuestionBank";
 import QuizMode from "../pages/QuizMode";
 import MockInterview from "../pages/MockInterview";
 import Progress from "../pages/Progress";
+import Tasks from "../pages/Tasks";
+import Summary from "../pages/Summary";
 
 function AppRoutes(){
     return (
@@ -12,6 +14,8 @@ function AppRoutes(){
             <Route path="/" element={<Layout/>}>
                 <Route index element={<Dashboard/>}/>
                 <Route path="question" element={<QuestionBank/>}/>
+                <Route path="tasks" element={<Tasks/>}/>
+                <Route path="summary" element={<Summary/>}/>
                 <Route path="quiz" element={<QuizMode/>}/>
                 <Route path="mock-interview" element={<MockInterview/>}/>
                 <Route path="progress" element={<Progress/>}/>

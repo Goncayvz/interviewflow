@@ -1,0 +1,38 @@
+CREATE DATABASE IF NOT EXISTS interviewflow
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+USE interviewflow;
+
+CREATE TABLE IF NOT EXISTS question_records (
+  question_id INT PRIMARY KEY,
+  source VARCHAR(60) NOT NULL DEFAULT 'question-bank',
+  solved_at DATETIME NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS task_records (
+  task_id INT PRIMARY KEY,
+  completed_at DATETIME NULL,
+  evidence_updated_at DATETIME NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS task_evidence (
+  task_id INT PRIMARY KEY,
+  notes TEXT NULL,
+  demo_url VARCHAR(2048) NULL,
+  repo_url VARCHAR(2048) NULL,
+  image_data LONGTEXT NULL,
+  image_name VARCHAR(255) NULL,
+  updated_at DATETIME NOT NULL,
+  
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  touched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_task_evidence_record
+    FOREIGN KEY (task_id)
+    REFERENCES task_records(task_id)
+    ON DELETE CASCADE
+);

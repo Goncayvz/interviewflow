@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { questions } from "../data/questions";
 import { getLocalizedText } from "../utils/getLocalizedText";
+import { syncQuestionSolved } from "../services/api";
 
 const categories = ["All", "React", "JavaScript", "HTML/CSS", "Algorithms"];
 const difficulties = ["All", "Easy", "Medium", "Hard"];
@@ -31,6 +32,39 @@ const readSolvedQuestions = () => {
     return Array.isArray(storedSolved) ? storedSolved : [];
   } catch {
     return [];
+  }
+};
+
+const upsertQuestionRecord = (questionId) => {
+  try {
+    const storedRecords = JSON.parse(
+      localStorage.getItem("interviewflow_question_records")
+    );
+    const records =
+      storedRecords && typeof storedRecords === "object" ? storedRecords : {};
+
+    if (!records[questionId]) {
+      records[questionId] = {
+        solvedAt: new Date().toISOString(),
+        source: "mock-interview",
+      };
+      syncQuestionSolved(questionId, records[questionId]);
+    }
+
+    localStorage.setItem(
+      "interviewflow_question_records",
+      JSON.stringify(records)
+    );
+  } catch {
+    localStorage.setItem(
+      "interviewflow_question_records",
+      JSON.stringify({
+        [questionId]: {
+          solvedAt: new Date().toISOString(),
+          source: "mock-interview",
+        },
+      })
+    );
   }
 };
 
@@ -124,9 +158,14 @@ function MockInterview() {
   );
 
   const markCurrentQuestionSolved = () => {
-    setSolvedQuestions((prev) =>
-      prev.includes(currentQuestion.id) ? prev : [...prev, currentQuestion.id]
-    );
+    setSolvedQuestions((prev) => {
+      if (prev.includes(currentQuestion.id)) {
+        return prev;
+      }
+
+      upsertQuestionRecord(currentQuestion.id);
+      return [...prev, currentQuestion.id];
+    });
   };
 
   const handleToggleAnswer = () => {
