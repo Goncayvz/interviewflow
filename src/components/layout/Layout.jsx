@@ -4,11 +4,11 @@ import Navbar from "./Navbar";
 
 function Layout(){
     return (
-        <div className="flex min-h-screen bg-slate-900 text-slate-100">
+        <div className="flex min-h-screen flex-col bg-slate-900 text-slate-100 lg:flex-row">
             <Sidebar/>
-            <div className=" flex-1 flex flex-col">
+            <div className="flex min-w-0 flex-1 flex-col">
                 <Navbar/>
-                <main className="flex-1 p-6 overflow-auto">
+                <main className="flex-1 overflow-x-hidden p-4 sm:p-6">
                     <Outlet/>
                 </main>
             </div>

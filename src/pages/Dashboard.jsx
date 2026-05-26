@@ -60,7 +60,7 @@ function Dashboard() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-4xl font-bold mb-2">
+        <h1 className="mb-2 text-3xl font-bold sm:text-4xl">
           Welcome Back 👋
         </h1>
 

@@ -173,18 +173,18 @@ function Summary() {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <h1 className="text-4xl font-bold mb-2">Summary</h1>
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+        <div className="min-w-0">
+          <h1 className="mb-2 text-3xl font-bold sm:text-4xl">Summary</h1>
           <p className="text-slate-400">
             Review Question Bank records and Task records in separate sections.
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
+        <div className="flex w-full flex-wrap gap-3 sm:w-auto sm:justify-end">
           <button
             onClick={() => setActiveView(summaryViews.all)}
-            className={`rounded-xl px-4 py-2 text-sm transition ${
+            className={`flex-1 rounded-xl px-4 py-2 text-sm transition sm:flex-none ${
               activeView === summaryViews.all
                 ? "bg-cyan-500 text-white"
                 : "bg-slate-800 text-slate-300 hover:bg-slate-700"
@@ -194,7 +194,7 @@ function Summary() {
           </button>
           <button
             onClick={() => setActiveView(summaryViews.questions)}
-            className={`rounded-xl px-4 py-2 text-sm transition ${
+            className={`flex-1 rounded-xl px-4 py-2 text-sm transition sm:flex-none ${
               activeView === summaryViews.questions
                 ? "bg-cyan-500 text-white"
                 : "bg-slate-800 text-slate-300 hover:bg-slate-700"
@@ -204,7 +204,7 @@ function Summary() {
           </button>
           <button
             onClick={() => setActiveView(summaryViews.tasks)}
-            className={`rounded-xl px-4 py-2 text-sm transition ${
+            className={`flex-1 rounded-xl px-4 py-2 text-sm transition sm:flex-none ${
               activeView === summaryViews.tasks
                 ? "bg-cyan-500 text-white"
                 : "bg-slate-800 text-slate-300 hover:bg-slate-700"
@@ -214,7 +214,7 @@ function Summary() {
           </button>
           <button
             onClick={exportRecords}
-            className="rounded-xl bg-slate-800 px-4 py-2 text-sm text-slate-300 transition hover:bg-slate-700"
+            className="flex-1 rounded-xl bg-slate-800 px-4 py-2 text-sm text-slate-300 transition hover:bg-slate-700 sm:flex-none"
           >
             Export JSON
           </button>
@@ -222,24 +222,24 @@ function Summary() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
           <p className="text-slate-400 text-sm mb-2">Question Bank Records</p>
-          <h2 className="text-4xl font-bold">{solvedQuestions.length}</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">{solvedQuestions.length}</h2>
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
           <p className="text-slate-400 text-sm mb-2">Total Questions</p>
-          <h2 className="text-4xl font-bold">{questions.length}</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">{questions.length}</h2>
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
           <p className="text-slate-400 text-sm mb-2">Task Records</p>
-          <h2 className="text-4xl font-bold">{taskRecords.length}</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">{taskRecords.length}</h2>
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
           <p className="text-slate-400 text-sm mb-2">Task Evidence</p>
-          <h2 className="text-4xl font-bold text-cyan-400">
+          <h2 className="text-3xl font-bold text-cyan-400 sm:text-4xl">
             {evidenceTasks.length}
           </h2>
         </div>
@@ -247,7 +247,7 @@ function Summary() {
 
       {shouldShowQuestions && (
       <section className="space-y-4">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center sm:gap-4">
           <h2 className="text-xl font-semibold">Question Bank Summary</h2>
           <span className="text-sm text-slate-400">
             {solvedQuestions.length}/{questions.length} solved
@@ -305,7 +305,7 @@ function Summary() {
 
       {shouldShowTasks && (
       <section className="space-y-4">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center sm:gap-4">
           <h2 className="text-xl font-semibold">Task Summary</h2>
           <span className="text-sm text-slate-400">
             {taskRecords.length}/{interviewTasks.length} records
@@ -367,7 +367,7 @@ function Summary() {
                   </p>
 
                   {evidence && (
-                    <div className="mt-5 grid grid-cols-1 gap-5 rounded-xl border border-slate-700 bg-slate-900 p-4 lg:grid-cols-[180px_1fr]">
+                    <div className="mt-5 grid grid-cols-1 gap-5 rounded-xl border border-slate-700 bg-slate-900 p-4 lg:grid-cols-[180px_minmax(0,1fr)]">
                       {evidence.imageData ? (
                         <img
                           src={evidence.imageData}

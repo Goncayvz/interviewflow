@@ -235,14 +235,32 @@ html,
 body,
 #root {
   min-height: 100%;
+  width: 100%;
   margin: 0;
   background: var(--app-bg);
   color: var(--app-text);
   font-family: Inter, system-ui, sans-serif;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 * {
   box-sizing: border-box;
+}
+
+img,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+input,
+select,
+textarea,
+button {
+  min-width: 0;
 }
 
 .bg-slate-900 {

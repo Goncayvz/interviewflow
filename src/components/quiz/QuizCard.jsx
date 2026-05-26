@@ -10,8 +10,8 @@ function QuizCard({
   const displayedQuestion = getLocalizedText(question.question, language);
 
   return (
-    <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
-      <div className="flex gap-2 mb-4">
+    <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
+      <div className="mb-4 flex flex-wrap gap-2">
         <span className="px-3 py-1 text-xs rounded-full bg-cyan-500/20 text-cyan-300">
           {question.category}
         </span>
@@ -21,7 +21,7 @@ function QuizCard({
         </span>
       </div>
 
-      <h2 className="text-2xl font-bold mb-6">{displayedQuestion}</h2>
+      <h2 className="mb-6 text-xl font-bold sm:text-2xl">{displayedQuestion}</h2>
 
       <div className="space-y-3">
         {question.options.map((option, index) => {
@@ -51,7 +51,7 @@ function QuizCard({
               disabled={showResult}
               className={`w-full text-left border rounded-xl px-4 py-3 transition ${optionClass}`}
             >
-              <div className="flex items-center justify-between gap-3">
+              <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center sm:gap-3">
                 <span>{displayedOption}</span>
 
                 {!showResult && isSelected && (

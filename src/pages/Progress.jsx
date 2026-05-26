@@ -115,31 +115,31 @@ function Progress() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-4xl font-bold mb-2">Progress Analytics</h1>
+        <h1 className="mb-2 text-3xl font-bold sm:text-4xl">Progress Analytics</h1>
         <p className="text-slate-400">
           Track your preparation progress and category performance.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
           <p className="text-slate-400 text-sm mb-2">Solved Questions</p>
-          <h2 className="text-4xl font-bold">{solvedCount}</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">{solvedCount}</h2>
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
           <p className="text-slate-400 text-sm mb-2">Total Questions</p>
-          <h2 className="text-4xl font-bold">{totalQuestion}</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">{totalQuestion}</h2>
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
           <p className="text-slate-400 text-sm mb-2">Completion Rate</p>
-          <h2 className="text-4xl font-bold text-cyan-400">{successRate}%</h2>
+          <h2 className="text-3xl font-bold text-cyan-400 sm:text-4xl">{successRate}%</h2>
         </div>
       </div>
 
-      <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
-        <div className="flex items-center justify-between gap-4 mb-5">
+      <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
+        <div className="mb-5 flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center sm:gap-4">
           <h2 className="text-xl font-semibold">Quiz Performance</h2>
           <span className="text-sm text-slate-400">
             {totalQuizzes} sessions
@@ -186,7 +186,7 @@ function Progress() {
           </div>
         </div>
 
-        <div className="mt-6 h-[280px] bg-slate-900/60 rounded-xl p-4">
+        <div className="mt-6 h-[260px] rounded-xl bg-slate-900/60 p-3 sm:h-[280px] sm:p-4">
           <h3 className="text-lg font-semibold mb-4">Correct / Wrong Chart</h3>
 
           <ResponsiveContainer width="100%" height="82%">
@@ -223,16 +223,16 @@ function Progress() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 max-w-5xl">
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 h-[460px]">
-          <div className="flex items-center justify-between gap-4 mb-5">
+      <div className="grid max-w-5xl grid-cols-1 gap-6 xl:grid-cols-2">
+        <div className="h-auto rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:h-[460px] sm:p-6">
+          <div className="mb-5 flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center sm:gap-4">
             <h2 className="text-xl font-semibold">Category Performance</h2>
             <span className="text-sm text-slate-400">
               {solvedCount}/{totalQuestion} solved
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {categoryData.map((item) => (
               <div
                 key={item.category}
@@ -301,7 +301,7 @@ function Progress() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 h-[390px]">
+        <div className="h-[340px] rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:h-[390px] sm:p-6">
           <h2 className="text-xl font-semibold mb-6">
             Difficulty Distribution
           </h2>
@@ -333,7 +333,7 @@ function Progress() {
         </div>
       </div>
 
-      <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+      <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
         <h2 className="text-xl font-semibold mb-6">Category Progress</h2>
 
         <div className="space-y-5">

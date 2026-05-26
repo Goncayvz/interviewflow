@@ -48,7 +48,7 @@ function ThemePicker() {
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center gap-2 bg-slate-800 border border-slate-700 hover:border-cyan-500 px-3 py-2 rounded-xl transition text-sm"
+        className="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-800 px-3 py-2 text-sm transition hover:border-cyan-500"
       >
         <span
           className="h-4 w-4 rounded-full border border-slate-700"
@@ -58,7 +58,7 @@ function ThemePicker() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-11 z-50 w-56 rounded-xl border border-slate-700 bg-slate-800 p-3 shadow-xl">
+        <div className="absolute right-0 top-11 z-50 w-52 rounded-xl border border-slate-700 bg-slate-800 p-3 shadow-xl sm:w-56">
           {["Dark", "Light"].map((group) => (
             <div key={group} className="mb-3 last:mb-0">
               <p className="px-2 pb-2 text-xs font-semibold uppercase text-slate-400">

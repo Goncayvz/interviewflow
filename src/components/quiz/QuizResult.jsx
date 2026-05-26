@@ -11,8 +11,8 @@ function QuizResult({ score, total, onRestart, language = "en", quizRecord }) {
   });
 
   return (
-    <div className="bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center">
-      <h2 className="text-3xl font-bold mb-3">
+    <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 text-center sm:p-8">
+      <h2 className="mb-3 text-2xl font-bold sm:text-3xl">
         {language === "en" ? "Quiz Completed" : "Quiz Tamamlandı"}
       </h2>
 
@@ -22,7 +22,7 @@ function QuizResult({ score, total, onRestart, language = "en", quizRecord }) {
           : `${total} sorudan ${correct} tanesini doğru cevapladın.`}
       </p>
 
-      <div className="text-6xl font-bold text-cyan-400 mb-6">
+      <div className="mb-6 text-5xl font-bold text-cyan-400 sm:text-6xl">
         {percentage}%
       </div>
 

@@ -144,9 +144,9 @@ function QuestionBank() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-4xl font-bold mb-2">Question Bank</h1>
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+        <div className="min-w-0">
+          <h1 className="mb-2 text-3xl font-bold sm:text-4xl">Question Bank</h1>
           <p className="text-slate-400">
             Practice technical interview questions by category and difficulty.
           </p>
@@ -154,7 +154,7 @@ function QuestionBank() {
 
         <button
           onClick={() => setLanguage((prev) => (prev === "en" ? "tr" : "en"))}
-          className="bg-slate-800 border border-slate-700 hover:border-cyan-500 px-4 py-2 rounded-xl transition text-sm"
+          className="rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 text-sm transition hover:border-cyan-500"
         >
           {language === "en" ? "TR" : "EN"}
         </button>

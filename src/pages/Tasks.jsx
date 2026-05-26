@@ -282,9 +282,9 @@ function Tasks() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-4xl font-bold mb-2">Tasks</h1>
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+        <div className="min-w-0">
+          <h1 className="mb-2 text-3xl font-bold sm:text-4xl">Tasks</h1>
           <p className="text-slate-400">
             React, JavaScript, HTML/CSS and algorithm interview tasks.
           </p>
@@ -292,33 +292,33 @@ function Tasks() {
 
         <button
           onClick={() => setLanguage((prev) => (prev === "en" ? "tr" : "en"))}
-          className="bg-slate-800 border border-slate-700 hover:border-cyan-500 px-4 py-2 rounded-xl transition text-sm"
+          className="rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 text-sm transition hover:border-cyan-500"
         >
           {language === "en" ? "TR" : "EN"}
         </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
           <p className="text-slate-400 text-sm mb-2">Total Tasks</p>
-          <h2 className="text-4xl font-bold">{interviewTasks.length}</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">{interviewTasks.length}</h2>
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
           <p className="text-slate-400 text-sm mb-2">Completed Tasks</p>
-          <h2 className="text-4xl font-bold">{completedCount}</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">{completedCount}</h2>
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
           <p className="text-slate-400 text-sm mb-2">Completion Rate</p>
-          <h2 className="text-4xl font-bold text-cyan-400">
+          <h2 className="text-3xl font-bold text-cyan-400 sm:text-4xl">
             {completionRate}%
           </h2>
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+        <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
           <p className="text-slate-400 text-sm mb-2">Evidence Uploaded</p>
-          <h2 className="text-4xl font-bold">{submittedCount}</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">{submittedCount}</h2>
         </div>
       </div>
 
@@ -372,11 +372,11 @@ function Tasks() {
             <div
               key={task.id}
               onClick={() => setSelectedTask(task)}
-              className="cursor-pointer bg-slate-800 border border-slate-700 rounded-2xl p-6 hover:border-cyan-500 transition"
+              className="cursor-pointer rounded-2xl border border-slate-700 bg-slate-800 p-4 transition hover:border-cyan-500 sm:p-6"
             >
-              <div className="flex items-start justify-between gap-4 mb-4">
-                <div>
-                  <div className="flex gap-2 mb-3">
+              <div className="mb-4 flex flex-col items-start justify-between gap-4 sm:flex-row">
+                <div className="min-w-0">
+                  <div className="mb-3 flex flex-wrap gap-2">
                     <span className="px-3 py-1 text-xs rounded-full bg-cyan-500/20 text-cyan-300">
                       {task.category}
                     </span>
@@ -390,7 +390,7 @@ function Tasks() {
                     )}
                   </div>
 
-                  <h3 className="text-lg font-semibold">
+                  <h3 className="text-base font-semibold sm:text-lg">
                     {getLocalizedText(task.question, language)}
                   </h3>
                 </div>
@@ -400,7 +400,7 @@ function Tasks() {
                     event.stopPropagation();
                     toggleCompleted(task.id);
                   }}
-                  className={`shrink-0 px-4 py-2 rounded-xl text-xs transition ${
+                  className={`w-full shrink-0 rounded-xl px-4 py-2 text-xs transition sm:w-auto ${
                     isCompleted
                       ? "bg-green-500 text-white"
                       : "bg-slate-700 text-slate-300 hover:bg-slate-600"
@@ -428,11 +428,11 @@ function Tasks() {
           onClick={closeTaskDetails}
         >
           <div
-            className="max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-2xl border border-slate-700 bg-slate-900 p-6 shadow-2xl"
+            className="max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-2xl border border-slate-700 bg-slate-900 p-4 shadow-2xl sm:p-6"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex items-start justify-between gap-4">
-              <div>
+            <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+              <div className="min-w-0">
                 <div className="flex flex-wrap gap-2 mb-4">
                   <span className="px-3 py-1 text-xs rounded-full bg-cyan-500/20 text-cyan-300">
                     {selectedTask.category}
@@ -442,7 +442,7 @@ function Tasks() {
                   </span>
                 </div>
 
-                <h2 className="text-2xl font-bold leading-tight">
+                <h2 className="text-xl font-bold leading-tight sm:text-2xl">
                   {getLocalizedText(selectedTask.question, language)}
                 </h2>
               </div>

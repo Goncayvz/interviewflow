@@ -12,17 +12,17 @@ const links = [
 
 function Sidebar() {
   return (
-    <aside className="w-64 bg-slate-950 border-r border-slate-800 p-5">
-      <h1 className="text-2xl font-bold mb-10 text-cyan-400">
+    <aside className="w-full border-b border-slate-800 bg-slate-950 p-4 lg:min-h-screen lg:w-64 lg:border-b-0 lg:border-r lg:p-5">
+      <h1 className="mb-4 text-xl font-bold text-cyan-400 sm:text-2xl lg:mb-10">
         InterviewFlow
       </h1>
-      <nav className="flex flex-col gap-3">
+      <nav className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:gap-3 lg:overflow-visible lg:pb-0">
         {links.map((link) => (
           <NavLink
             key={link.path}
             to={link.path}
             className={({ isActive }) =>
-              `px-4 py-2 rounded-xl transition ${
+              `shrink-0 whitespace-nowrap rounded-lg px-3 py-2 text-sm transition sm:px-4 lg:rounded-xl lg:text-base ${
                 isActive
                   ? "bg-cyan-500 text-white"
                   : "text-slate-300 hover:bg-slate-800"

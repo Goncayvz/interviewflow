@@ -8,8 +8,8 @@ import {
 
 function ActivityChart({ data }) {
   return (
-    <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 h-[400px]">
-      <h2 className="text-xl font-semibold mb-6">
+    <div className="h-[340px] rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:h-[400px] sm:p-6">
+      <h2 className="mb-4 text-lg font-semibold sm:mb-6 sm:text-xl">
         Solved by Category
       </h2>
 

@@ -1,11 +1,11 @@
 function StatCard({ title, value }) {
   return (
-    <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+    <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
       <p className="text-slate-400 text-sm mb-2">
         {title}
       </p>
 
-      <h3 className="text-3xl font-bold">
+      <h3 className="text-2xl font-bold sm:text-3xl">
         {value}
       </h3>
     </div>

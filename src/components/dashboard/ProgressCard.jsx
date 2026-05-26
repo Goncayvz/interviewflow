@@ -1,7 +1,7 @@
 function ProgressCard({ skills }) {
   return (
-    <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
-      <h2 className="text-xl font-semibold mb-6">
+    <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
+      <h2 className="mb-4 text-lg font-semibold sm:mb-6 sm:text-xl">
         Skill Progress
       </h2>
 

@@ -175,9 +175,9 @@ function MockInterview() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-4xl font-bold mb-2">Mock Interview</h1>
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+        <div className="min-w-0">
+          <h1 className="mb-2 text-3xl font-bold sm:text-4xl">Mock Interview</h1>
           <p className="text-slate-400">
             {language === "en"
               ? "Simulate a real technical interview session with a timer and notes."
@@ -187,15 +187,15 @@ function MockInterview() {
 
         <button
           onClick={() => setLanguage((prev) => (prev === "en" ? "tr" : "en"))}
-          className="bg-slate-800 border border-slate-700 hover:border-cyan-500 px-4 py-2 rounded-xl transition text-sm"
+          className="rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 text-sm transition hover:border-cyan-500"
         >
           {language === "en" ? "TR" : "EN"}
         </button>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        <div className="xl:col-span-2 bg-slate-800 border border-slate-700 rounded-2xl p-6">
-          <div className="flex gap-2 mb-5">
+        <div className="rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6 xl:col-span-2">
+          <div className="mb-5 flex flex-wrap gap-2">
             <span className="px-3 py-1 text-xs rounded-full bg-cyan-500/20 text-cyan-300">
               {currentQuestion.category}
             </span>
@@ -205,7 +205,7 @@ function MockInterview() {
             </span>
           </div>
 
-          <h2 className="text-3xl font-bold mb-6">{displayedQuestion}</h2>
+          <h2 className="mb-6 text-2xl font-bold sm:text-3xl">{displayedQuestion}</h2>
 
           <div className="flex flex-wrap gap-3">
             <button
@@ -241,7 +241,7 @@ function MockInterview() {
           )}
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-5">
+        <div className="space-y-5 rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
           <div className="grid grid-cols-1 gap-4">
             <div>
               <label className="block text-sm text-slate-400 mb-2">
@@ -317,12 +317,12 @@ function MockInterview() {
               {language === "en" ? "Interview Timer" : "Mülakat Süresi"}
             </p>
 
-            <div className="text-5xl font-bold text-cyan-400">
+            <div className="text-4xl font-bold text-cyan-400 sm:text-5xl">
               {formatTime(timeLeft)}
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <button
               onClick={() => setIsRunning(true)}
               className="bg-cyan-500 hover:bg-cyan-600 text-white py-3 rounded-xl transition"

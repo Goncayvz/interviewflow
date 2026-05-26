@@ -306,9 +306,9 @@ function QuizMode() {
   if (!isStarted) {
     return (
       <div className="max-w-3xl mx-auto space-y-6">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h1 className="text-4xl font-bold mb-2">
+        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+          <div className="min-w-0">
+            <h1 className="mb-2 text-3xl font-bold sm:text-4xl">
               {language === "en" ? "Quiz Setup" : "Quiz Ayarları"}
             </h1>
             <p className="text-slate-400">
@@ -320,13 +320,13 @@ function QuizMode() {
 
           <button
             onClick={() => setLanguage((prev) => (prev === "en" ? "tr" : "en"))}
-            className="bg-slate-800 border border-slate-700 hover:border-cyan-500 px-4 py-2 rounded-xl transition text-sm"
+            className="rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 text-sm transition hover:border-cyan-500"
           >
             {language === "en" ? "TR" : "EN"}
           </button>
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-5">
+        <div className="space-y-5 rounded-2xl border border-slate-700 bg-slate-800 p-4 sm:p-6">
           <div>
             <label className="block text-sm text-slate-400 mb-2">
               {language === "en" ? "Category" : "Kategori"}
@@ -408,9 +408,9 @@ function QuizMode() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-4xl font-bold mb-2">
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+        <div className="min-w-0">
+          <h1 className="mb-2 text-3xl font-bold sm:text-4xl">
             {language === "en" ? "Quiz Mode" : "Quiz Modu"}
           </h1>
           <p className="text-slate-400">
@@ -422,7 +422,7 @@ function QuizMode() {
 
         <button
           onClick={() => setLanguage((prev) => (prev === "en" ? "tr" : "en"))}
-          className="bg-slate-800 border border-slate-700 hover:border-cyan-500 px-4 py-2 rounded-xl transition text-sm"
+          className="rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 text-sm transition hover:border-cyan-500"
         >
           {language === "en" ? "TR" : "EN"}
         </button>
@@ -442,10 +442,10 @@ function QuizMode() {
         language={language}
       />
 
-      <div className="flex justify-between">
+      <div className="flex flex-col justify-between gap-3 sm:flex-row">
         <button
           onClick={handleRestart}
-          className="bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-xl transition"
+          className="rounded-xl bg-slate-700 px-6 py-3 text-white transition hover:bg-slate-600"
         >
           {language === "en" ? "Exit Quiz" : "Quizden Çık"}
         </button>
@@ -453,7 +453,7 @@ function QuizMode() {
         {!showResult ? (
           <button
             onClick={handleCheckAnswer}
-            className="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-xl transition disabled:opacity-50"
+            className="rounded-xl bg-cyan-500 px-6 py-3 text-white transition hover:bg-cyan-600 disabled:opacity-50"
             disabled={selectedAnswer === null}
           >
             {language === "en" ? "Check Answer" : "Cevabı Kontrol Et"}
@@ -461,7 +461,7 @@ function QuizMode() {
         ) : (
           <button
             onClick={handleNextQuestion}
-            className="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-xl transition"
+            className="rounded-xl bg-cyan-500 px-6 py-3 text-white transition hover:bg-cyan-600"
           >
             {currentIndex === activeQuestions.length - 1
               ? language === "en"
