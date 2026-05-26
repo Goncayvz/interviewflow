@@ -88,6 +88,7 @@ Add application screenshots under `docs/screenshots/` and update the image paths
 ![Summary]
 <img width="1332" height="659" alt="image" src="https://github.com/user-attachments/assets/d73e8d2c-2256-473e-9a76-ecf434bff3cc" />
 
+
 |Theme picker|
 <img width="299" height="460" alt="image" src="https://github.com/user-attachments/assets/a8008c03-af2c-4f78-bac5-02092ac936d9" />
 
