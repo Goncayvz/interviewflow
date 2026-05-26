@@ -65,8 +65,6 @@ Core modules:
 
 ### Screenshots
 
-Add application screenshots under `docs/screenshots/` and update the image paths below.
-
 ## Dashboard 
 <img width="1326" height="664" alt="image" src="https://github.com/user-attachments/assets/1458221c-72ac-4d70-a86c-b26edb7974d4" />
 
@@ -359,15 +357,30 @@ Ana modüller:
 
 ### Ekran Görüntüleri
 
-Uygulama ekran görüntülerini `docs/screenshots/` klasörüne ekleyip aşağıdaki görsel yollarını güncelleyebilirsin.
+## Dashboard 
+<img width="1326" height="664" alt="image" src="https://github.com/user-attachments/assets/1458221c-72ac-4d70-a86c-b26edb7974d4" />
 
-| Dashboard | Question Bank |
-| :-- | :-- |
-| ![Dashboard](docs/screenshots/dashboard.png) | ![Question Bank](docs/screenshots/question-bank.png) |
+ ## Question Bank
+ <img width="1318" height="669" alt="image" src="https://github.com/user-attachments/assets/4a39a6ad-aeed-475e-b74e-5331e296f778" />
 
-| Tasks | Summary |
-| :-- | :-- |
-| ![Tasks](docs/screenshots/tasks.png) | ![Summary](docs/screenshots/summary.png) |
+## Tasks 
+<img width="1321" height="655" alt="image" src="https://github.com/user-attachments/assets/c928ed61-59ec-4623-b983-5d6932e09866" />
+
+## Quiz Mode
+<img width="1321" height="650" alt="image" src="https://github.com/user-attachments/assets/471f9d42-1ac9-42f0-a0eb-33d467ac0f9e" />
+
+## Mock Interview
+<img width="1313" height="666" alt="image" src="https://github.com/user-attachments/assets/1104ef9f-838e-4702-af06-2098970e86f8" />
+
+## Progress
+<img width="1328" height="664" alt="image" src="https://github.com/user-attachments/assets/c1adb09b-b228-4a71-994d-ca65749c9fda" />
+
+## Summary
+<img width="1332" height="659" alt="image" src="https://github.com/user-attachments/assets/d73e8d2c-2256-473e-9a76-ecf434bff3cc" />
+
+## Theme picker
+<img width="299" height="460" alt="image" src="https://github.com/user-attachments/assets/a8008c03-af2c-4f78-bac5-02092ac936d9" />
+
 
 ### Kullanılan Teknolojiler
 
